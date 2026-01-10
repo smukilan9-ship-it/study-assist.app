@@ -86,9 +86,9 @@ elif st.session_state.selected_option == 'Summarize notes':
     st.header("Summarize notes")
     st.session_state.uploaded_file = st.file_uploader("Upload a PDF", type=["pdf"])
     st.session_state.button_summarize = st.button("Summarize notes")
-    if st.session_state.button_summarize:
+    if st.session_state.button_summarize and st.session_state.uploaded_file:
         client = genai.Client(api_key="AIzaSyCB5B44Oy-JDWVyr9pQX9O-vUkE0WA66ew")
-        response = client.models.generate_content(
+        response = st.session_state.client.models.generate_content(
             model='gemini-2.5-flash',
             contents=[types.Part.from_bytes(
                 data=st.session_state.uploaded_file.read(),
@@ -100,6 +100,7 @@ elif st.session_state.selected_option == 'Summarize notes':
         )
         st.session_state.summary = response.text
         st.write(st.session_state.summary)
+
 
 
 

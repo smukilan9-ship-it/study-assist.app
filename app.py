@@ -22,7 +22,8 @@ st.sidebar.info('The Home button is used to go to the main Menu')
 home = st.sidebar.button('Home')
 st.sidebar.caption('Go back to the main screen')
 if home:
-    del st.session_state.messages
+    if 'messages' in st.session_state:
+        del st.session_state.messages
     st.session_state.selected_option, st.session_state.chat = None, None
     st.rerun()
 
@@ -144,8 +145,10 @@ elif st.session_state.selected_option == '🔑Change API KEY':
         if st.session_state.change:
             st.session_state.client = genai.Client(api_key=api_keys[st.session_state.key])
             st.write(f'You are now using API KEY {st.session_state.key} for this session')
-            del st.session_state.messages
+            if 'messages' in st.session_state:
+                del st.session_state.messages
             st.session_state.selected_option, st.session_state.chat = None, None
+
 
 
 

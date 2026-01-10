@@ -28,7 +28,7 @@ if st.session_state.selected_option is None and 'chat' not in st.session_state:
         if pressed:
             st.session_state.selected_option = options
             st.session_state.sys_inst = SYSTEM_INSTRUCTIONS[options]
-            st.session_state.client = genai.Client(api_key='AIzaSyCB5B44Oy-JDWVyr9pQX9O-vUkE0WA66ew')
+            st.session_state.client = genai.Client(api_key=st.secrets('google_api_key_1'))
             st.session_state.chat = st.session_state.client.chats.create(
                 model="gemini-2.5-flash",
                 config=types.GenerateContentConfig(
@@ -87,7 +87,6 @@ elif st.session_state.selected_option == 'Summarize notes':
     st.session_state.uploaded_file = st.file_uploader("Upload a PDF", type=["pdf"])
     st.session_state.button_summarize = st.button("Summarize notes")
     if st.session_state.button_summarize and st.session_state.uploaded_file:
-        client = genai.Client(api_key="AIzaSyCB5B44Oy-JDWVyr9pQX9O-vUkE0WA66ew")
         response = st.session_state.client.models.generate_content(
             model='gemini-2.5-flash',
             contents=[types.Part.from_bytes(
@@ -100,6 +99,7 @@ elif st.session_state.selected_option == 'Summarize notes':
         )
         st.session_state.summary = response.text
         st.write(st.session_state.summary)
+
 
 
 

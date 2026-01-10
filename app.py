@@ -19,6 +19,7 @@ if 'client' not in st.session_state:
 
 st.session_state.home = st.sidebar.button('Home')
 if st.session_state.home:
+    del st.session_state.messages
     st.session_state.selected_option, st.session_state.chat = None, None
     st.rerun()
 st.session_state.Reset= st.sidebar.button('Reset')
@@ -136,5 +137,7 @@ elif st.session_state.selected_option == '🔑Change API KEY':
         if st.session_state.change:
             st.session_state.client = genai.Client(api_key=api_keys[st.session_state.key])
             st.write(f'You are now using API KEY {st.session_state.key} for this session')
+            del st.session_state.messages
             st.session_state.selected_option,st.session_state.chat=None,None
+
 

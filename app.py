@@ -10,6 +10,9 @@ SYSTEM_INSTRUCTIONS = {"Question and answers": "You are a professor,answer the q
 st.set_page_config(layout="wide", )
 col1, col2, cole = st.columns([3, 3, 2])
 
+if 'client' not in st.session_state:
+  st.session_state.client = genai.Client(api_key=st.secrets['google_api_key_1'])
+
 st.session_state.home = st.sidebar.button('Home')
 if st.session_state.home:
     st.session_state.clear()
@@ -28,7 +31,6 @@ if st.session_state.selected_option is None and 'chat' not in st.session_state:
         if pressed:
             st.session_state.selected_option = options
             st.session_state.sys_inst = SYSTEM_INSTRUCTIONS[options]
-            st.session_state.client = genai.Client(api_key=st.secrets['google_api_key_1'])
             st.session_state.chat = st.session_state.client.chats.create(
                 model="gemini-2.5-flash",
                 config=types.GenerateContentConfig(
@@ -99,6 +101,7 @@ elif st.session_state.selected_option == 'Summarize notes':
         )
         st.session_state.summary = response.text
         st.write(st.session_state.summary)
+
 
 
 

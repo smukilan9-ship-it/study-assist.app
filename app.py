@@ -56,23 +56,21 @@ if st.session_state.selected_option is None and ['chat' not in st.session_state 
             st.rerun()
 
 if st.session_state.selected_option == '❓Question and answers':
-    col1,col2,col3=st.columns([1,3,1])
-    with col2:
-        st.header('Ask a question!')
-        st.divider()
-        for message in st.session_state.messages:
-            with st.chat_message(message['role']):
-                st.markdown(message['content'])
-        user_input = st.chat_input("yo what is up?")
-        if user_input:
-            with st.chat_message('user'):
-                st.markdown(user_input)
-            response = st.session_state.chat.send_message(user_input).text.strip()
-            st.session_state.messages.append({"role": 'user', "content": user_input})
-    
-            with st.chat_message('chatbot'):
-                st.markdown(response)
-            st.session_state.messages.append({'role': 'chatbot', 'content': response})
+    st.header('Ask a question!')
+    st.divider()
+    for message in st.session_state.messages:
+        with st.chat_message(message['role']):
+            st.markdown(message['content'])
+    user_input = st.chat_input("yo what is up?")
+    if user_input:
+        with st.chat_message('user'):
+            st.markdown(user_input)
+        response = st.session_state.chat.send_message(user_input).text.strip()
+        st.session_state.messages.append({"role": 'user', "content": user_input})
+
+        with st.chat_message('chatbot'):
+            st.markdown(response)
+        st.session_state.messages.append({'role': 'chatbot', 'content': response})
 
 
 elif st.session_state.selected_option == '💻Code helper':
@@ -148,6 +146,7 @@ elif st.session_state.selected_option == '🔑Change API KEY':
             st.write(f'You are now using API KEY {st.session_state.key} for this session')
             del st.session_state.messages
             st.session_state.selected_option, st.session_state.chat = None, None
+
 
 
 

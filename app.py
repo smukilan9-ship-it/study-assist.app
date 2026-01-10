@@ -17,7 +17,7 @@ if 'client' not in st.session_state:
     st.session_state.key = 1
     st.session_state.client = genai.Client(api_key=api_keys[st.session_state.key])
 
-st.sidebar.Header('Dashboard')
+st.sidebar.header('Dashboard')
 st.info('The Home button is used to go to the main Menu')
 home = st.sidebar.button('Home')
 st.caption('Go back to the main screen')
@@ -146,4 +146,5 @@ elif st.session_state.selected_option == '🔑Change API KEY':
             st.write(f'You are now using API KEY {st.session_state.key} for this session')
             del st.session_state.messages
             st.session_state.selected_option, st.session_state.chat = None, None
+
 

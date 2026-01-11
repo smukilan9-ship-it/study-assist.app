@@ -95,6 +95,13 @@ elif st.session_state.selected_option == '💻Code helper':
                     If the code is correct, explicitly say "No errors" 
                     question: {st.session_state.question_input}
                     user code: {st.session_state.answer}
+                    
+                    Before giving feedback:
+                    1. Trace the program’s execution paths step by step.
+                    2. Explicitly consider how break, continue, and return affect control flow.
+                    3. Do not flag UX or stylistic preferences as logical errors.
+                    4. Only report issues that cause incorrect execution, unreachable logic errors, or incorrect outputs.
+
 
                     Output format:(in a tabular way with the options at the left)
                     Rating: x/10 /n
@@ -104,7 +111,7 @@ elif st.session_state.selected_option == '💻Code helper':
                     st.subheader('Code helper')
                     st.write(response)
                 else:
-                    prompt = f'answer the question {st.session_state.question_input} using cbse class 11 computer science coding syllabus only. give only the code anf nothing else'
+                    prompt = f'answer the question {st.session_state.question_input} using cbse class 11 computer science coding syllabus only. give only the code and nothing else'
                     response = st.session_state.chat.send_message(prompt).text
                     response = response.strip("```")
                     response = response.lstrip('python')
@@ -148,6 +155,7 @@ elif st.session_state.selected_option == '🔑Change API KEY':
             if 'messages' in st.session_state:
                 del st.session_state.messages
             st.session_state.selected_option, st.session_state.chat = None, None
+
 
 
 
